@@ -4,7 +4,7 @@ const Hero = () => {
       <div className="overlay">
         <p className="badge">Top 4 en el Mercado Nacional</p>
 
-        <h1>
+        <h1 className="hero-title">
           Líderes en Distribución <br /> Nacional
         </h1>
 
