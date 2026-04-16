@@ -302,3 +302,15 @@ body {
 .footer-links a:hover {
   text-decoration: underline;
 }
+
+.loading-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 5rem 0;
+}
+
+.loading-gif {
+  width: 80px;   /* ajusta el tamaño */
+  opacity: 0.7;
+}

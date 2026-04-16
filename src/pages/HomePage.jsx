@@ -3,7 +3,7 @@ import Hero from "../components/Hero";
 import Stats from "../components/Stats";
 import Coverage from "../components/Coverage";
 import Footer from "../components/Footer";
-import "../styles/home.css";
+import "../styles/HomePage.css";
 
 const Home = () => {
   return (
