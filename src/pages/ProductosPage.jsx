@@ -1,19 +1,9 @@
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect } from "react";
 import axios from "axios";
 import Navbar from "../components/Navbar.jsx";
 import Footer from "../components/Footer.jsx";
 import loadingGif from "../assets/loading.gif";
 import "../styles/ProductosPage.css";
-
-const CATEGORIAS = [
-  { value: "", label: "Todas las categorías" },
-  { value: "acero", label: "Acero" },
-  { value: "hierro", label: "Hierro" },
-  { value: "aluminio", label: "Aluminio" },
-  { value: "tuberia", label: "Tubería" },
-  { value: "laminas", label: "Láminas" },
-  { value: "perfiles", label: "Perfiles" },
-];
 
 const SkeletonCard = () => (
   <div className="product-card skeleton">
@@ -80,28 +70,57 @@ const ProductsPage = () => {
   const [search, setSearch] = useState("");
   const [categoria, setCategoria] = useState("");
   const [inputValue, setInputValue] = useState("");
+  const [categorias, setCategorias] = useState([]);
+  const [categoriasLoading, setCategoriasLoading] = useState(true);
 
-  const fetchProductos = useCallback(async () => {
+  const fetchProductos = async () => {
     setLoading(true);
     setError(null);
     try {
       const params = new URLSearchParams();
       if (search) params.set("search", search);
-      if (categoria) params.set("categoria-nombre", categoria);
+      if (categoria) params.set("categoria-id", categoria);
 
       const { data } = await axios.get(`/api/productos?${params.toString()}`);
-      
+
       setProductos(data);
     } catch (err) {
       setError(err.message);
     } finally {
       setLoading(false);
     }
-  }, [search, categoria]);
+  };
+
+  const fetchCategorias = async () => {
+    try {
+      const { data } = await axios.get('/api/categorias');
+
+      const formattedCategorias = data.map((cat) => ({
+        value: cat.id,
+        label: cat.nombre,
+      }));
+
+      setCategorias([
+        { value: "", label: "Todas las categorías" },
+        ...formattedCategorias,
+      ]);
+    } catch (err) {
+      console.error("Error fetching categorías:", err);
+      // Mantener las categorías por defecto si hay error
+      setCategorias([{ value: "", label: "Todas las categorías" }]);
+    } finally {
+      setCategoriasLoading(false);
+    }
+  };
 
   useEffect(() => {
     fetchProductos();
-  }, [fetchProductos]);
+  }, [search, categoria]);
+
+  useEffect(() => {
+    fetchCategorias();
+    fetchProductos();
+  }, []);
 
   // Timer de 400ms para actualizar el estado de búsqueda
   useEffect(() => {
@@ -141,8 +160,9 @@ const ProductsPage = () => {
               className="category-select"
               value={categoria}
               onChange={(e) => setCategoria(e.target.value)}
+              disabled={categoriasLoading}
             >
-              {CATEGORIAS.map((c) => (
+              {categorias.map((c) => (
                 <option key={c.value} value={c.value}>{c.label}</option>
               ))}
             </select>
@@ -167,9 +187,9 @@ const ProductsPage = () => {
             <button className="btn-primary" onClick={fetchProductos}>Reintentar</button>
           </div>
         ) : loading ? (
-            <div className="loading-container">
-                <img src={loadingGif} alt="Cargando..." className="loading-gif" />
-            </div>
+          <div className="loading-container">
+            <img src={loadingGif} alt="Cargando..." className="loading-gif" />
+          </div>
         ) : productos.length === 0 ? (
           <div className="products-empty">
             <p>No se encontraron productos con esos filtros.</p>
