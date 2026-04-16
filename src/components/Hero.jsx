@@ -1,4 +1,8 @@
+import { useNavigate } from 'react-router-dom';
+
 const Hero = () => {
+  const navigate = useNavigate();
+  
   return (
     <section className="hero">
       <div className="overlay">
@@ -14,7 +18,7 @@ const Hero = () => {
         </p>
 
         <div className="buttons">
-          <button className="btn-primary">Explorar Catálogo</button>
+          <button className="btn-primary" onClick={() => navigate('/productos')}>Explorar Catálogo</button>
           <button className="btn-secondary">Registrarse</button>
         </div>
       </div>

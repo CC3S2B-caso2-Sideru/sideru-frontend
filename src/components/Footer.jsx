@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import logo from "../assets/logo-siderurgica.png";
 
 const Footer = () => {
@@ -46,7 +47,7 @@ const Footer = () => {
         <div className="footer-links">
           <a href="#">Privacidad</a>
           <a href="#">Términos</a>
-          <a href="#">Catálogo</a>
+          <Link to="/productos">Catálogo</Link>
         </div>
       </div>
 
