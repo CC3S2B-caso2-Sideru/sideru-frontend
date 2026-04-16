@@ -1,0 +1,148 @@
+:root{
+    --primary-color:#701130;
+    --secondary-color: #91123a;
+    --accent-color: #ff4c00;
+    --bg-light: #f9f9f9;
+    --border-color: #ddd;
+    --text-dark: #333;
+    --white: #ffffff;
+    --black-blue: #000000;
+}
+
+body{
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: var(--bg-light);
+}
+
+header{
+    background-color: var(--white);
+    border-bottom: 3px solid var(--text-dark);
+    padding: 10px 30px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.logo-dot-pe{
+    background-color: var(--border-color);
+}
+
+.app-title{
+    background-color: var(--white);
+}
+
+.main-footer{
+    margin-top: 50px;
+    padding: 20px;
+    display: flex;
+    justify-content: space-between;
+    border-top: 1px solid #eee;
+}
+
+.container{
+    max-width: 1000px;
+    margin: 30px auto;
+    background: var(--white);
+    padding: 0 40px;
+    box-shadow: 0 4px 15px rgb(0,0,0,0.05);
+    border-radius: 8px;
+    min-height: 400px;
+}
+
+.separator{
+    background-color: var(--black-blue);
+    color: var(--white);
+    align-items: center;
+    border-bottom: 3px solid var(--text-dark);
+    padding: 50px 10px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.first-page{
+    height: 100vh;
+    background-image: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6));
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    color: white;
+
+}
+
+.stat-item{
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+.stat-item h2{
+    font-size: 3rem;
+    margin: 0;
+    font-weight: 8000;
+}
+
+.stat-item span{
+    font-size: 1.5rem;
+    color: #cbd5e1;
+    text-transform: capitalize;
+}
+
+.third-page{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 50px;
+}
+
+.content-container {
+  width: 50%;
+}
+
+.description {
+  font-size: 1.2em;
+  margin-bottom: 30px;
+}
+
+.info-item {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.icon-container {
+  width: 50px;
+  height: 50px;
+  background-color: #f2f2f2;
+  border-radius: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-right: 15px;
+}
+
+.icon-container i {
+  font-size: 1.5em;
+  color: #333;
+}
+
+h3 {
+  font-size: 1.2em;
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+h4 {
+  font-size: 1em;
+  color: #666;
+}
+
+.image-container {
+  width: 40%;
+}
+
+.image-container img {
+  width: 100%;
+  height: auto;
+  border-radius: 10px;
+}
