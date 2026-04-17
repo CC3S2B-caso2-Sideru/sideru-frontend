@@ -79,7 +79,7 @@ const ProductsPage = () => {
     try {
       const params = new URLSearchParams();
       if (search) params.set("search", search);
-      if (categoria) params.set("categoria-id", categoria);
+      if (categoria) params.set("categoria", categoria);
 
       const { data } = await axios.get(`/api/productos?${params.toString()}`);
 
