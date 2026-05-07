@@ -57,6 +57,25 @@ const ProductsPage = () => {
     }
   }, []);
 
+  const addToCart = (producto) => {
+  const cart = JSON.parse(localStorage.getItem("cart")) || [];
+
+  const existingProduct = cart.find(
+    (p) => p.sku === producto.sku
+  );
+
+  if (existingProduct) {
+    existingProduct.cantidad += 1;
+  } else {
+    cart.push({
+      ...producto,
+      cantidad: 1,
+    });
+  }
+
+  localStorage.setItem("cart", JSON.stringify(cart));
+};
+
   useEffect(() => {
     fetchProductos();
   }, [fetchProductos]);
@@ -65,6 +84,8 @@ const ProductsPage = () => {
     fetchCategorias();
     fetchProductos();
   }, [fetchCategorias, fetchProductos]);
+
+  
 
   return (
     <>
@@ -98,6 +119,7 @@ const ProductsPage = () => {
           setInputValue={setInputValue}
           setSearch={setSearch}
           setCategoria={setCategoria}
+          addToCart={addToCart}
         />
       </main>
 
