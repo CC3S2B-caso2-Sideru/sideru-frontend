@@ -1,6 +1,5 @@
 import { useState, useEffect, useCallback } from "react";
 import axios from "axios";
-import Navbar from "../../components/Navbar.jsx";
 import Footer from "../../components/Footer.jsx";
 import Filters from "./Filters.jsx";
 import ProductsGrid from "./ProductsGrid.jsx";
@@ -50,7 +49,6 @@ const ProductsPage = () => {
       ]);
     } catch (err) {
       console.error("Error fetching categorías:", err);
-      // Mantener las categorías por defecto si hay error
       setCategorias([{ value: "", label: "Todas las categorías" }]);
     } finally {
       setCategoriasLoading(false);
@@ -58,39 +56,26 @@ const ProductsPage = () => {
   }, []);
 
   const addToCart = (producto) => {
-  const cart = JSON.parse(localStorage.getItem("cart")) || [];
+    const cart = JSON.parse(localStorage.getItem("cart")) || [];
+    const existingProduct = cart.find((p) => p.sku === producto.sku);
+    if (existingProduct) {
+      existingProduct.cantidad += 1;
+    } else {
+      cart.push({ ...producto, cantidad: 1 });
+    }
+    localStorage.setItem("cart", JSON.stringify(cart));
+  };
 
-  const existingProduct = cart.find(
-    (p) => p.sku === producto.sku
-  );
-
-  if (existingProduct) {
-    existingProduct.cantidad += 1;
-  } else {
-    cart.push({
-      ...producto,
-      cantidad: 1,
-    });
-  }
-
-  localStorage.setItem("cart", JSON.stringify(cart));
-};
+  useEffect(() => {
+    fetchCategorias();
+  }, [fetchCategorias]);
 
   useEffect(() => {
     fetchProductos();
   }, [fetchProductos]);
 
-  useEffect(() => {
-    fetchCategorias();
-    fetchProductos();
-  }, [fetchCategorias, fetchProductos]);
-
-  
-
   return (
     <>
-      <Navbar />
-
       <main className="products-page">
         <div className="products-header">
           <div className="products-header-text">

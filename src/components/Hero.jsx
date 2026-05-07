@@ -19,7 +19,7 @@ const Hero = () => {
 
         <div className="buttons">
           <button className="btn-primary" onClick={() => navigate('/productos')}>Explorar Catálogo</button>
-          <button className="btn-secondary">Registrarse</button>
+          <button className="btn-secondary" onClick={() => navigate('/register')}>Registrarse</button>
         </div>
       </div>
     </section>
