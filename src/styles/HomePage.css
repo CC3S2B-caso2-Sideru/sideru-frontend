@@ -54,6 +54,30 @@ body {
   color: #0a0f2c;
 }
 
+.user-name {
+  color: #0a0f2c;
+  font-weight: 500;
+  padding: 0.5rem 1rem;
+  background: #f0f0f0;
+  border-radius: 8px;
+  font-size: 14px;
+}
+
+.logout-btn {
+  background: #e74c3c;
+  color: white;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 500;
+  transition: background 0.2s;
+}
+
+.logout-btn:hover {
+  background: #c0392b;
+}
+
 /* BOTÓN CARRITO */
 
 .cart-button {
@@ -297,19 +321,21 @@ body {
   margin-top: 20px;
 }
 
-/* BUTTONS */
 .btn-primary {
   background: #0a0f2c;
   color: white;
-  padding: 1rem 1.5rem;
+  padding: 0.5rem 1rem;
   border: none;
-  margin-right: 10px;
-  border-radius: 10px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 500;
+  transition: background 0.2s;
 }
 
 .btn-secondary {
-  padding: 1rem 1.5rem;
-  border-radius: 10px;
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  font-weight: 500;
 
   background: rgba(255, 255, 255, 0.1); /* transparencia */
   border: 1px solid rgba(255, 255, 255, 0.3);
