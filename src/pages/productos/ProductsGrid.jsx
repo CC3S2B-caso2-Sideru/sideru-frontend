@@ -1,7 +1,18 @@
 import ProductoCard from "./ProductoCard.jsx";
 import loadingGif from "../../assets/loading.gif";
 
-const ProductsGrid = ({ productos, loading, error, search, categoria, fetchProductos, setInputValue, setSearch, setCategoria }) => {
+const ProductsGrid = ({
+  productos,
+  loading,
+  error,
+  search,
+  categoria,
+  fetchProductos,
+  setInputValue,
+  setSearch,
+  setCategoria,
+  addToCart
+}) => {
   return (
     <>
       <div className="products-meta">
@@ -32,7 +43,11 @@ const ProductsGrid = ({ productos, loading, error, search, categoria, fetchProdu
       ) : (
         <div className="products-grid">
           {productos.map((p) => (
-            <ProductoCard key={p.sku} producto={p} />
+            <ProductoCard
+              key={p.sku}
+              producto={p}
+              addToCart={addToCart}
+            />
           ))}
         </div>
       )}
