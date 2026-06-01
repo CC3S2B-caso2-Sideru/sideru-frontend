@@ -1,8 +1,30 @@
-* {
-  box-sizing: border-box;
+@import "tailwindcss";
+
+@theme {
+  --color-primary: #0a0f2c;
+  --color-primary-light: #1a2050;
+  --font-family-sans: "Noto Sans Cham", sans-serif;
 }
 
 body {
+  font-family: var(--font-family-sans);
   margin: 0;
-  font-family: Arial, sans-serif;
+}
+
+@keyframes fadeSlideIn {
+  from { opacity: 0; transform: translateY(-8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeSlideOut {
+  from { opacity: 1; transform: translateY(0); }
+  to { opacity: 0; transform: translateY(-8px); }
+}
+
+@utility animate-fade-slide-in {
+  animation: fadeSlideIn 0.3s ease;
+}
+
+@utility animate-fade-slide-out {
+  animation: fadeSlideOut 0.4s ease forwards;
 }

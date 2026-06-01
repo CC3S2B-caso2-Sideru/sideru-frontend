@@ -1,18 +1,20 @@
-import { Container, Button } from "react-bootstrap";
 import { Link } from "react-router-dom";
 
 const NotFoundPage = () => {
   return (
-    <Container className="text-center py-5">
-      <h1 className="display-1 fw-bold text-primary">404</h1>
-      <h2 className="mb-3">Página no encontrada</h2>
-      <p className="text-muted mb-4">
+    <div className="py-5 text-center">
+      <h1 className="text-8xl font-bold text-primary">404</h1>
+      <h2 className="mb-3 text-2xl font-semibold">Página no encontrada</h2>
+      <p className="mb-4 text-gray-500">
         Lo sentimos, la página que buscas no existe o fue movida.
       </p>
-      <Button as={Link} to="/" variant="primary">
+      <Link
+        to="/"
+        className="inline-block rounded-lg bg-primary px-6 py-2 font-medium text-white transition hover:bg-primary-light"
+      >
         Volver al inicio
-      </Button>
-    </Container>
+      </Link>
+    </div>
   );
 };
 

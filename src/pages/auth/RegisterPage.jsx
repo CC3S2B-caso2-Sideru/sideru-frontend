@@ -1,8 +1,6 @@
-import { Container, Form, Button, Alert } from "react-bootstrap";
 import { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";
-import "../../styles/AuthPages.css";
 
 const RegisterPage = () => {
   const navigate = useNavigate();
@@ -67,145 +65,96 @@ const RegisterPage = () => {
     }
   };
 
-  return (
-    <Container className="py-5" style={{ maxWidth: "600px" }}>
-      <h2 className="mb-4 text-center">Registrarse</h2>
+  const inputClass = "w-full rounded-lg border-2 border-gray-300 px-3 py-2 shadow-sm transition focus:border-primary focus:ring-4 focus:ring-blue-900/15 focus:outline-none";
+  const labelClass = "mb-1 block text-sm font-medium text-gray-700";
 
-      <div className="mb-4 d-flex justify-content-center gap-3">
-        <span className={`badge ${step >= 1 ? "bg-dark" : "bg-light text-dark border"}`}>1. Cuenta</span>
-        <span className={`badge ${step >= 2 ? "bg-dark" : "bg-light text-dark border"}`}>2. Datos Personales</span>
+  return (
+    <div className="py-5 mx-auto max-w-150">
+      <h2 className="mb-4 text-center text-2xl font-bold">Registrarse</h2>
+
+      <div className="mb-4 flex justify-center gap-3">
+        <span className={`inline-flex items-center rounded-full px-3 py-1 text-sm font-medium ${step >= 1 ? "bg-primary text-white" : "border border-gray-300 bg-white text-gray-700"}`}>1. Cuenta</span>
+        <span className={`inline-flex items-center rounded-full px-3 py-1 text-sm font-medium ${step >= 2 ? "bg-primary text-white" : "border border-gray-300 bg-white text-gray-700"}`}>2. Datos Personales</span>
       </div>
 
-      {error && <Alert variant="danger">{error}</Alert>}
+      {error && (
+        <div className="mb-4 rounded border border-red-300 bg-red-50 p-3 text-red-800">
+          {error}
+        </div>
+      )}
 
       {step === 1 && (
-        <Form onSubmit={handleNext} className="auth-form">
-          <Form.Group className="mb-3">
-            <Form.Label>Usuario</Form.Label>
-            <Form.Control
-              name="username"
-              value={form.username}
-              onChange={(e) => handleChange(e, setForm)}
-              required
-            />
-          </Form.Group>
-          <Form.Group className="mb-3">
-            <Form.Label>Email</Form.Label>
-            <Form.Control
-              type="email"
-              name="email"
-              value={form.email}
-              onChange={(e) => handleChange(e, setForm)}
-              required
-            />
-          </Form.Group>
-          <Form.Group className="mb-3">
-            <Form.Label>Contraseña</Form.Label>
-            <Form.Control
-              type="password"
-              name="password"
-              value={form.password}
-              onChange={(e) => handleChange(e, setForm)}
-              required
-            />
-          </Form.Group>
-          <Form.Group className="mb-3">
-            <Form.Label>Confirmar Contraseña</Form.Label>
-            <Form.Control
-              type="password"
-              name="confirmPassword"
-              value={form.confirmPassword}
-              onChange={(e) => handleChange(e, setForm)}
-              required
-            />
-          </Form.Group>
-          <Button variant="primary" type="submit" className="w-100">
+        <form onSubmit={handleNext}>
+          <div className="mb-3">
+            <label className={labelClass}>Usuario</label>
+            <input name="username" value={form.username} onChange={(e) => handleChange(e, setForm)} required className={inputClass} />
+          </div>
+          <div className="mb-3">
+            <label className={labelClass}>Email</label>
+            <input type="email" name="email" value={form.email} onChange={(e) => handleChange(e, setForm)} required className={inputClass} />
+          </div>
+          <div className="mb-3">
+            <label className={labelClass}>Contraseña</label>
+            <input type="password" name="password" value={form.password} onChange={(e) => handleChange(e, setForm)} required className={inputClass} />
+          </div>
+          <div className="mb-3">
+            <label className={labelClass}>Confirmar Contraseña</label>
+            <input type="password" name="confirmPassword" value={form.confirmPassword} onChange={(e) => handleChange(e, setForm)} required className={inputClass} />
+          </div>
+          <button type="submit" className="w-full rounded-lg bg-primary py-2 font-medium text-white transition hover:bg-primary-light">
             Siguiente →
-          </Button>
-        </Form>
+          </button>
+        </form>
       )}
 
       {step === 2 && (
-        <Form onSubmit={handleSubmit} className="auth-form">
-          <div className="border rounded p-3 mb-3">
-            <p className="fw-bold mb-3">Datos Personales</p>
-            <Form.Group className="mb-3">
-              <Form.Label>Nombre</Form.Label>
-              <Form.Control
-                name="nombre"
-                value={persona.nombre}
-                onChange={(e) => handleChange(e, setPersona)}
-                required
-              />
-            </Form.Group>
-            <Form.Group className="mb-3">
-              <Form.Label>Apellido</Form.Label>
-              <Form.Control
-                name="apellido"
-                value={persona.apellido}
-                onChange={(e) => handleChange(e, setPersona)}
-                required
-              />
-            </Form.Group>
-            <Form.Group className="mb-3">
-              <Form.Label>DNI</Form.Label>
-              <Form.Control
-                name="dni"
-                value={persona.dni}
-                onChange={(e) => handleChange(e, setPersona)}
-                placeholder="Opcional"
-              />
-            </Form.Group>
-            <Form.Group className="mb-3">
-              <Form.Label>RUC</Form.Label>
-              <Form.Control
-                name="ruc"
-                value={persona.ruc}
-                onChange={(e) => handleChange(e, setPersona)}
-                placeholder="Opcional"
-              />
-            </Form.Group>
-            <Form.Group className="mb-3">
-              <Form.Label>Razón Social</Form.Label>
-              <Form.Control
-                name="razonSocial"
-                value={persona.razonSocial}
-                onChange={(e) => handleChange(e, setPersona)}
-                placeholder="Opcional"
-              />
-            </Form.Group>
-            <Form.Group className="mb-3">
-              <Form.Label>Teléfono</Form.Label>
-              <Form.Control
-                name="telefono"
-                value={persona.telefono}
-                onChange={(e) => handleChange(e, setPersona)}
-              />
-            </Form.Group>
-            <Form.Group className="mb-3">
-              <Form.Label>Dirección</Form.Label>
-              <Form.Control
-                name="direccion"
-                value={persona.direccion}
-                onChange={(e) => handleChange(e, setPersona)}
-              />
-            </Form.Group>
+        <form onSubmit={handleSubmit}>
+          <div className="mb-3 rounded-lg border border-gray-200 p-4">
+            <p className="mb-3 font-bold">Datos Personales</p>
+            <div className="mb-3">
+              <label className={labelClass}>Nombre</label>
+              <input name="nombre" value={persona.nombre} onChange={(e) => handleChange(e, setPersona)} required className={inputClass} />
+            </div>
+            <div className="mb-3">
+              <label className={labelClass}>Apellido</label>
+              <input name="apellido" value={persona.apellido} onChange={(e) => handleChange(e, setPersona)} required className={inputClass} />
+            </div>
+            <div className="mb-3">
+              <label className={labelClass}>DNI</label>
+              <input name="dni" value={persona.dni} onChange={(e) => handleChange(e, setPersona)} placeholder="Opcional" className={inputClass} />
+            </div>
+            <div className="mb-3">
+              <label className={labelClass}>RUC</label>
+              <input name="ruc" value={persona.ruc} onChange={(e) => handleChange(e, setPersona)} placeholder="Opcional" className={inputClass} />
+            </div>
+            <div className="mb-3">
+              <label className={labelClass}>Razón Social</label>
+              <input name="razonSocial" value={persona.razonSocial} onChange={(e) => handleChange(e, setPersona)} placeholder="Opcional" className={inputClass} />
+            </div>
+            <div className="mb-3">
+              <label className={labelClass}>Teléfono</label>
+              <input name="telefono" value={persona.telefono} onChange={(e) => handleChange(e, setPersona)} className={inputClass} />
+            </div>
+            <div className="mb-3">
+              <label className={labelClass}>Dirección</label>
+              <input name="direccion" value={persona.direccion} onChange={(e) => handleChange(e, setPersona)} className={inputClass} />
+            </div>
           </div>
-          <div className="d-flex gap-2">
-            <Button variant="outline-secondary" onClick={() => setStep(1)} className="w-50">
+          <div className="flex gap-2">
+            <button type="button" onClick={() => setStep(1)} className="w-1/2 rounded-lg border border-gray-300 bg-white py-2 font-medium text-gray-700 transition hover:bg-gray-50">
               ← Atrás
-            </Button>
-            <Button variant="primary" type="submit" className="w-50" disabled={loading}>
+            </button>
+            <button type="submit" disabled={loading} className="w-1/2 rounded-lg bg-primary py-2 font-medium text-white transition hover:bg-primary-light disabled:cursor-not-allowed disabled:opacity-70">
               {loading ? "Registrando..." : "Registrarse"}
-            </Button>
+            </button>
           </div>
-        </Form>
+        </form>
       )}
 
-      <p className="mt-3 text-center">
-        ¿Ya tienes cuenta? <Link to="/login">Inicia sesión</Link>
+      <p className="mt-3 text-center text-sm text-gray-600">
+        ¿Ya tienes cuenta? <Link to="/login" className="font-medium text-primary hover:underline">Inicia sesión</Link>
       </p>
-    </Container>
+    </div>
   );
 };
 
