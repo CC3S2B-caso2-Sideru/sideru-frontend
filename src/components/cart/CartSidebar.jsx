@@ -1,8 +1,8 @@
-import { useCart } from "../context/CartContext";
-import { useAuth } from "../context/AuthContext";
+import { useCart } from "../../contexts/CartContext";
+import { useAuth } from "../../contexts/AuthContext";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
-import axios from "axios";
+import { submitCotizacion } from "../../services/cotizaciones.service";
 
 const CartSidebar = ({ isOpen, onClose }) => {
   const {
@@ -36,10 +36,7 @@ const CartSidebar = ({ isOpen, onClose }) => {
         cantidad: item.cantidad
       }));
 
-      await axios.post("/api/cotizaciones", {
-        observaciones: "Cotización solicitada",
-        items: items,
-      });
+      await submitCotizacion(items);
 
       alert("Solicitud enviada");
       clearCart();

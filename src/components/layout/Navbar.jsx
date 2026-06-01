@@ -1,9 +1,9 @@
 import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
-import { useCart } from "../context/CartContext";
-import { useAuth } from "../context/AuthContext";
-import CartSidebar from "./CartSidebar";
-import logo from "../assets/logo-siderurgica.png";
+import { useCart } from "../../contexts/CartContext";
+import { useAuth } from "../../contexts/AuthContext";
+import CartSidebar from "../cart/CartSidebar";
+import logo from "../../assets/logo-siderurgica.png";
 
 const Navbar = () => {
   const navigate = useNavigate();

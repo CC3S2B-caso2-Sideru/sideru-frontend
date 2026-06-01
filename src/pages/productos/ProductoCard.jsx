@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useCart } from "../../context/CartContext";
+import { useCart } from "../../contexts/CartContext";
 
 const ProductoCard = ({ producto }) => {
   const [imgError, setImgError] = useState(false);

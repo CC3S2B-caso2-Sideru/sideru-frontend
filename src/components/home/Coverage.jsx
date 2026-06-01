@@ -1,4 +1,4 @@
-import almacen from "../assets/images/almacen-siderurgia-2.jpg";
+import almacen from "../../assets/images/almacen-siderurgia-2.jpg";
 
 const Coverage = () => {
   return (

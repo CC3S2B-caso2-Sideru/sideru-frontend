@@ -1,8 +1,8 @@
 import { useState, useEffect, useCallback } from "react";
-import axios from "axios";
-import Footer from "../../components/Footer.jsx";
+import Footer from "../../components/layout/Footer.jsx";
 import Filters from "./Filters.jsx";
 import ProductsGrid from "./ProductsGrid.jsx";
+import { fetchProductos as fetchProductosService, fetchCategorias as fetchCategoriasService } from "../../services/productos.service";
 import "../../styles/ProductosPage.css";
 
 const ProductsPage = () => {
@@ -20,12 +20,7 @@ const ProductsPage = () => {
     setLoading(true);
     setError(null);
     try {
-      const params = new URLSearchParams();
-      if (search) params.set("search", search);
-      if (categoria) params.set("categoria", categoria);
-
-      const { data } = await axios.get(`/api/productos?${params.toString()}`);
-
+      const { data } = await fetchProductosService(search, categoria);
       setProductos(data);
     } catch (err) {
       setError(err.message);
@@ -36,7 +31,7 @@ const ProductsPage = () => {
 
   const fetchCategorias = useCallback(async () => {
     try {
-      const { data } = await axios.get('/api/categorias');
+      const { data } = await fetchCategoriasService();
 
       const formattedCategorias = data.map((cat) => ({
         value: cat.id,
