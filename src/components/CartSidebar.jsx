@@ -1,4 +1,8 @@
 import { useCart } from "../context/CartContext";
+import { useAuth } from "../context/AuthContext";
+import { useNavigate } from "react-router-dom";
+import { useState } from "react";
+import axios from "axios";
 
 const CartSidebar = ({ isOpen, onClose }) => {
   const {
@@ -9,6 +13,46 @@ const CartSidebar = ({ isOpen, onClose }) => {
     removeFromCart,
     clearCart,
   } = useCart();
+
+  const { token } = useAuth();
+  const navigate = useNavigate();
+  const [loading, setLoading] = useState(false);
+
+  const handleCheckout = async () => {
+    if (!token) {
+      onClose();
+      navigate("/login", {
+        state: {
+          message: "Iniciar sesion para cotizar"
+        }
+      });
+      return;
+    }
+    setLoading(true);
+
+    try {
+      const items = cart.map((item) => ({
+        sku: item.sku,
+        cantidad: item.cantidad
+      }));
+
+      await axios.post("/api/cotizaciones", {
+        observaciones: "Cotización solicitada",
+        items: items,
+      });
+
+      alert("Solicitud enviada");
+      clearCart();
+      onClose();
+      navigate("/solicitudes");
+    } catch (err) {
+      console.error(err);
+      alert(err.response?.data?.message || "Error al solicitar cotización");
+    } finally {
+      setLoading(false);
+    }
+  }
+
 
   return (
     <>
@@ -75,8 +119,8 @@ const CartSidebar = ({ isOpen, onClose }) => {
                 })}
               </h3>
 
-              <button className="btn-primary cart-action">
-                Solicitar cotización
+              <button className="btn-primary cart-action" onClick={handleCheckout} disabled={loading}>
+                {loading ? "Procesando..." : "Solicitar cotización"}
               </button>
 
               <button className="clear-cart-btn" onClick={clearCart}>
