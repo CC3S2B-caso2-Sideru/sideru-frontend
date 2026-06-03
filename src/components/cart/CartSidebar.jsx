@@ -42,7 +42,7 @@ const CartSidebar = ({ isOpen, onClose }) => {
         cantidad: item.cantidad,
       }));
 
-      await submitCotizacion(items, token);
+      await submitCotizacion(items);
 
       alert("Solicitud enviada");
       clearCart();
