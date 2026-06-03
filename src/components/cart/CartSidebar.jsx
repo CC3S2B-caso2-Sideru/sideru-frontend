@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import clsx from "clsx";
 import { useAuth } from "../../contexts/AuthContext";
 import { useCart } from "../../contexts/CartContext";
 import { submitCotizacion } from "../../services/cotizaciones.service";
@@ -68,8 +69,10 @@ const CartSidebar = ({ isOpen, onClose }) => {
       )}
 
       <aside
-        className={`fixed right-0 top-0 z-1000 flex h-screen w-full max-w-400px flex-col bg-white shadow-[-4px_0_20px_rgba(0,0,0,0.12)] transition-transform duration-300 ease-out ${isOpen ? "translate-x-0" : "translate-x-full"
-          }`}
+        className={clsx(
+          "fixed right-0 top-0 z-1000 flex h-screen w-full max-w-400px flex-col bg-white shadow-[-4px_0_20px_rgba(0,0,0,0.12)] transition-transform duration-300 ease-out",
+          isOpen ? "translate-x-0" : "translate-x-full"
+        )}
         aria-hidden={!isOpen}
       >
         <div className="flex items-center justify-between border-b border-gray-200 px-6 py-5">

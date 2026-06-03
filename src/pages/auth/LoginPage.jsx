@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { useNavigate, Link, useLocation } from "react-router-dom";
+import clsx from "clsx";
 import { useAuth } from "../../contexts/AuthContext";
 
 const LoginPage = () => {
@@ -53,7 +54,7 @@ const LoginPage = () => {
 
       {redirectMessage && (
         <div
-          className={`relative mb-4 rounded border border-yellow-300 bg-yellow-50 p-3 text-yellow-800 animate-fade-slide-in ${redirectHiding ? "animate-fade-slide-out" : ""}`}
+          className={clsx("relative mb-4 rounded border border-yellow-300 bg-yellow-50 p-3 text-yellow-800 animate-fade-slide-in", redirectHiding && "animate-fade-slide-out")}
         >
           <span>{redirectMessage}</span>
           <button

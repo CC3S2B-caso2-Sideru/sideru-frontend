@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react";
-//import { Container, Table, Button, Badge, Spinner, Alert } from "react-bootstrap";
+import { XCircle, FileText } from "lucide-react";
 import { fetchMisCotizaciones } from "../../services/cotizaciones.service";
-import Footer from "../../components/layout/Footer";
+import Loader from "../../components/Loader";
+import SolicitudCard from "./components/SolicitudCard";
 
 const SolicitudesPage = () => {
   const [solicitudes, setSolicitudes] = useState([]);
@@ -10,6 +11,7 @@ const SolicitudesPage = () => {
 
   const fetchSolicitudes = async () => {
     setLoading(true);
+    setError(null);
     try {
       const { data } = await fetchMisCotizaciones();
       setSolicitudes(data);
@@ -25,64 +27,55 @@ const SolicitudesPage = () => {
     fetchSolicitudes();
   }, []);
 
-  const variantBadge = (estado) => {
-    switch (estado.toLowerCase()) {
-      case "aceptada": return "success";
-      case "enviada": return "info";
-      case "borrador": return "warning";
-      case "rechazada": return "danger";
-      default: return "secondary";
-    }
-  };
-
-  if (loading) {
-    return (
-      <Container className="py-5 text-center">
-        <Spinner animation="border" variant="primary" />
-        <p className="mt-3 text-muted">Cargando solicitudes...</p>
-      </Container>
-    );
-  }
-
   return (
-    <>
-      <Container className="py-5">
-        <h2 className="mb-4">Mis Solicitudes de Cotización</h2>
-        {error && <Alert variant="danger">{error}</Alert>}
+    <div className="mx-auto w-full max-w-4xl px-4 py-10 sm:px-6">
+      <h2 className="mb-8 text-2xl font-bold text-gray-950">
+        Mis Solicitudes de Cotización
+      </h2>
 
-        {solicitudes.length === 0 ? (
-          <p className="text-muted">No tienes solicitudes aún.</p>
-        ) : (
-          <Table hover responsive>
-            <thead>
-              <tr>
-                <th>Nro Cotización</th>
-                <th>Fecha de Emisión</th>
-                <th>Expiración</th>
-                <th>Estado</th>
-                <th>Total</th>
-                <th>Observaciones</th>
-              </tr>
-            </thead>
-            <tbody>
-              {solicitudes.map((s) => (
-                <tr key={s.id}>
-                  <td>#000{s.id}</td>
-                  <td>{new Date(s.fechaEmision).toLocaleDateString()}</td>
-                  <td>{new Date(s.fechaExpiracion).toLocaleDateString()}</td>
-                  <td>
-                    <Badge bg={variantBadge(s.estado)}>{s.estado.toUpperCase()}</Badge>
-                  </td>
-                  <td>S/ {Number(s.total).toFixed(2)}</td>
-                  <td>{s.observaciones || "Sin observaciones"}</td>
-                </tr>
-              ))}
-            </tbody>
-          </Table>
-        )}
-      </Container>
-      <Footer />
-    </>
+      {loading && (
+        <div className="flex flex-col items-center justify-center gap-4 py-20 text-gray-500">
+          <Loader size={36} />
+          <p>Cargando solicitudes...</p>
+        </div>
+      )}
+
+      {!loading && error && (
+        <div className="rounded border border-red-300 bg-red-50 p-4 text-red-800">
+          <div className="flex items-start gap-3">
+            <XCircle className="mt-0.5 h-5 w-5 shrink-0" />
+            <div>
+              <p className="font-medium">{error}</p>
+              <button
+                type="button"
+                className="mt-2 text-sm font-medium text-red-700 underline hover:text-red-900"
+                onClick={fetchSolicitudes}
+              >
+                Reintentar
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {!loading && !error && solicitudes.length === 0 && (
+        <div className="flex flex-col items-center justify-center rounded-lg border border-dashed border-gray-300 py-20 text-gray-500">
+          <FileText className="mb-3 h-12 w-12 text-gray-300" />
+          <p className="text-lg font-medium">No tienes solicitudes aún</p>
+          <p className="mt-1 text-sm">
+            Agrega productos al carrito y solicita una cotización.
+          </p>
+        </div>
+      )}
+
+      {!loading && !error && solicitudes.length > 0 && (
+        <div className="space-y-3">
+          {solicitudes.map((s) => (
+            <SolicitudCard key={s.id} solicitud={s} />
+          ))}
+        </div>
+      )}
+    </div>
   );
 };
 

@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
+import clsx from "clsx";
 import { useAuth } from "../../contexts/AuthContext";
 
 const RegisterPage = () => {
@@ -73,8 +74,8 @@ const RegisterPage = () => {
       <h2 className="mb-4 text-center text-2xl font-bold">Registrarse</h2>
 
       <div className="mb-4 flex justify-center gap-3">
-        <span className={`inline-flex items-center rounded-full px-3 py-1 text-sm font-medium ${step >= 1 ? "bg-primary text-white" : "border border-gray-300 bg-white text-gray-700"}`}>1. Cuenta</span>
-        <span className={`inline-flex items-center rounded-full px-3 py-1 text-sm font-medium ${step >= 2 ? "bg-primary text-white" : "border border-gray-300 bg-white text-gray-700"}`}>2. Datos Personales</span>
+        <span className={clsx("inline-flex items-center rounded-full px-3 py-1 text-sm font-medium", step >= 1 ? "bg-primary text-white" : "border border-gray-300 bg-white text-gray-700")}>1. Cuenta</span>
+        <span className={clsx("inline-flex items-center rounded-full px-3 py-1 text-sm font-medium", step >= 2 ? "bg-primary text-white" : "border border-gray-300 bg-white text-gray-700")}>2. Datos Personales</span>
       </div>
 
       {error && (
