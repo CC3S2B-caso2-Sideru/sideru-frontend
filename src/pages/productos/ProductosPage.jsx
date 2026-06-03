@@ -1,9 +1,10 @@
 import { useState, useEffect, useCallback } from "react";
-import Footer from "../../components/layout/Footer.jsx";
 import Filters from "./Filters.jsx";
 import ProductsGrid from "./ProductsGrid.jsx";
-import { fetchProductos as fetchProductosService, fetchCategorias as fetchCategoriasService } from "../../services/productos.service";
-import "../../styles/ProductosPage.css";
+import {
+  fetchProductos as fetchProductosService,
+  fetchCategorias as fetchCategoriasService,
+} from "../../services/productos.service";
 
 const ProductsPage = () => {
   const [productos, setProductos] = useState([]);
@@ -70,12 +71,16 @@ const ProductsPage = () => {
   }, [fetchProductos]);
 
   return (
-    <>
-      <main className="products-page">
-        <div className="products-header">
-          <div className="products-header-text">
-            <h1>Catálogo de Productos</h1>
-            <p>Encuentra todo lo que necesitas para tu proyecto.</p>
+    <main className="min-h-full bg-stone-100 px-6 py-10 sm:px-8 md:px-12 lg:px-16">
+      <div className="mx-auto max-w-6xl">
+        <div className="mb-8 flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
+          <div>
+            <h1 className="m-0 text-3xl font-bold text-slate-950 sm:text-4xl">
+              Catálogo de Productos
+            </h1>
+            <p className="m-0 mt-2 text-base text-slate-600">
+              Encuentra todo lo que necesitas para tu proyecto.
+            </p>
           </div>
 
           <Filters
@@ -101,10 +106,8 @@ const ProductsPage = () => {
           setCategoria={setCategoria}
           addToCart={addToCart}
         />
-      </main>
-
-      <Footer />
-    </>
+      </div>
+    </main>
   );
 };
 
