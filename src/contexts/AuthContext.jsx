@@ -30,7 +30,11 @@ export const AuthProvider = ({ children }) => {
     if (token) {
       const payload = parseJwt(token);
       if (payload) {
-        const extracted = { username: payload.username || payload.sub || "" };
+        const extracted = {
+          username: payload.sub || "",
+          rol: payload.rol || "cliente",
+          tipo: payload.tipo || "CLIENTE",
+        };
         setUser(extracted);
         localStorage.setItem("user", JSON.stringify(extracted));
       }

@@ -35,6 +35,15 @@ const Navbar = () => {
             Catálogo de Productos
           </Link>
 
+          {token && user?.tipo === "INTERNO" && (
+            <Link
+              className="whitespace-nowrap rounded-lg bg-primary px-4 py-2 text-sm font-medium text-white transition hover:bg-primary-light"
+              to="/admin"
+            >
+              Panel
+            </Link>
+          )}
+
           {token && (
             <span className="rounded-lg bg-slate-100 px-4 py-2 text-sm font-medium text-slate-950">
               {user?.username || user?.persona?.nombre || "Usuario"}

@@ -7,6 +7,9 @@ import SolicitudesPage from "./pages/solicitudes/SolicitudesPage";
 import NotFoundPage from "./pages/NotFoundPage";
 import Layout from "./components/layout/Layout";
 import PrivateRoute from "./components/auth/PrivateRoute";
+import AdminRoute from "./components/auth/AdminRoute";
+import AdminLayout from "./components/admin/AdminLayout";
+import CotizacionesAdminPage from "./pages/admin/CotizacionesAdminPage";
 
 const App = () => {
   return (
@@ -25,6 +28,18 @@ const App = () => {
           }
         />
         <Route path="*" element={<NotFoundPage />} />
+      </Route>
+
+      <Route
+        path="/admin"
+        element={
+          <AdminRoute>
+            <AdminLayout />
+          </AdminRoute>
+        }
+      >
+        <Route index element={<CotizacionesAdminPage />} />
+        <Route path="cotizaciones" element={<CotizacionesAdminPage />} />
       </Route>
     </Routes>
   );
