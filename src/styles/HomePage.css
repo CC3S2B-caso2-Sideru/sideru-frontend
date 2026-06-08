@@ -1,0 +1,18 @@
+body {
+  margin: 0;
+  font-family: "Noto Sans Cham", sans-serif;
+  font-optical-sizing: auto;
+  font-style: normal;
+}
+
+.loading-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 5rem 0;
+}
+
+.loading-gif {
+  width: 80px;
+  opacity: 0.7;
+}

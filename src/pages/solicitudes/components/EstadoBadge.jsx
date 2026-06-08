@@ -1,0 +1,35 @@
+const variantClasses = {
+  enviada:
+    "bg-blue-100 text-blue-800 border border-blue-200",
+  aceptada:
+    "bg-green-100 text-green-800 border border-green-200",
+  rechazada:
+    "bg-red-100 text-red-800 border border-red-200",
+  borrador:
+    "bg-yellow-100 text-yellow-800 border border-yellow-200",
+  expirada:
+    "bg-gray-100 text-gray-500 border border-gray-200",
+};
+
+const labelByEstado = {
+  enviada: "Enviada",
+  aceptada: "Aceptada",
+  rechazada: "Rechazada",
+  borrador: "Borrador",
+  expirada: "Expirada",
+};
+
+const EstadoBadge = ({ estado }) => {
+  const clases = variantClasses[estado?.toLowerCase()] ?? variantClasses.borrador;
+  const label = labelByEstado[estado?.toLowerCase()] ?? estado;
+
+  return (
+    <span
+      className={`inline-flex items-center rounded-full px-3 py-1 text-xs font-semibold ${clases}`}
+    >
+      {label}
+    </span>
+  );
+};
+
+export default EstadoBadge;
