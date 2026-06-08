@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import clsx from "clsx";
 import { useAuth } from "../../contexts/AuthContext";
 import { useCart } from "../../contexts/CartContext";
+import { useToast } from "../../contexts/ToastContext";
 import { submitCotizacion } from "../../services/cotizaciones.service";
 
 const formatPrice = (value) =>
@@ -21,6 +22,7 @@ const CartSidebar = ({ isOpen, onClose }) => {
   } = useCart();
 
   const { token } = useAuth();
+  const toast = useToast();
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
 
@@ -45,13 +47,13 @@ const CartSidebar = ({ isOpen, onClose }) => {
 
       await submitCotizacion(items);
 
-      alert("Solicitud enviada");
+      toast.success("Solicitud enviada");
       clearCart();
       onClose();
       navigate("/solicitudes");
     } catch (err) {
       console.error(err);
-      alert(err.response?.data?.message || "Error al solicitar cotizacion");
+      toast.error(err.response?.data?.message || "Error al solicitar cotizacion");
     } finally {
       setLoading(false);
     }
@@ -63,14 +65,14 @@ const CartSidebar = ({ isOpen, onClose }) => {
         <button
           type="button"
           aria-label="Cerrar carrito"
-          className="fixed inset-0 z-999 cursor-default bg-black/40"
+          className="fixed inset-0 z-50 cursor-default bg-black/40"
           onClick={onClose}
         />
       )}
 
       <aside
         className={clsx(
-          "fixed right-0 top-0 z-1000 flex h-screen w-full max-w-400px flex-col bg-white shadow-[-4px_0_20px_rgba(0,0,0,0.12)] transition-transform duration-300 ease-out",
+          "fixed right-0 top-0 z-50 flex h-screen w-full max-w-md flex-col bg-white shadow-[-4px_0_20px_rgba(0,0,0,0.12)] transition-transform duration-300 ease-out",
           isOpen ? "translate-x-0" : "translate-x-full"
         )}
         aria-hidden={!isOpen}

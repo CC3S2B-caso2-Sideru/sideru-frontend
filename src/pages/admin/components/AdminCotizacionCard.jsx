@@ -3,6 +3,7 @@ import { ChevronDown, Check, X } from "lucide-react";
 import clsx from "clsx";
 import EstadoBadge from "../../solicitudes/components/EstadoBadge";
 import SolicitudDetalle from "../../solicitudes/components/SolicitudDetalle";
+import { useToast } from "../../../contexts/ToastContext";
 import { aceptarCotizacion, rechazarCotizacion } from "../../../services/admin.service";
 
 const formatPrice = (value) =>
@@ -16,6 +17,7 @@ const formatDate = (value) =>
   });
 
 const AdminCotizacionCard = ({ solicitud, onUpdate }) => {
+  const toast = useToast();
   const [expanded, setExpanded] = useState(false);
   const [acting, setActing] = useState(false);
   const [confirmAction, setConfirmAction] = useState(null);
@@ -28,7 +30,7 @@ const AdminCotizacionCard = ({ solicitud, onUpdate }) => {
         : await rechazarCotizacion(solicitud.id);
       onUpdate(data);
     } catch (err) {
-      alert(err.response?.data?.message || "Error al procesar la acción");
+      toast.error(err.response?.data?.message || "Error al procesar la acción");
     } finally {
       setActing(false);
       setConfirmAction(null);
