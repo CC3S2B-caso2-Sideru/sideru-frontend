@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import clsx from "clsx";
 import { useAuth } from "../../contexts/AuthContext";
@@ -25,6 +25,19 @@ const CartSidebar = ({ isOpen, onClose }) => {
   const toast = useToast();
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    if (!isOpen) {
+      return;
+    }
+
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+
+    return () => {
+      document.body.style.overflow = previousOverflow;
+    };
+  }, [isOpen]);
 
   const handleCheckout = async () => {
     if (!token) {
@@ -102,45 +115,59 @@ const CartSidebar = ({ isOpen, onClose }) => {
                   key={item.sku}
                   className="border-b border-gray-200 py-4 first:pt-0 last:border-b-0"
                 >
-                  <div>
-                    <h4 className="text-base font-semibold text-gray-950">
-                      {item.nombre}
-                    </h4>
+                  <div className="flex gap-4">
+                    <div className="min-w-0 flex-1">
+                      <h4 className="text-base font-semibold text-gray-950">
+                        {item.nombre}
+                      </h4>
 
-                    <span className="mt-1 block text-sm text-gray-600">
-                      S/ {formatPrice(item.precio)}
-                    </span>
+                      <span className="mt-1 block text-sm text-gray-600">
+                        S/ {formatPrice(item.precio)}
+                      </span>
+
+                      <div className="mt-3 flex items-center gap-3">
+                        <button
+                          type="button"
+                          className="grid h-8 w-8 place-items-center rounded-md bg-primary text-sm font-bold text-white transition hover:bg-primary-light"
+                          onClick={() => decreaseQuantity(item.sku)}
+                        >
+                          -
+                        </button>
+
+                        <span className="min-w-6 text-center text-sm font-semibold text-gray-900">
+                          {item.cantidad}
+                        </span>
+
+                        <button
+                          type="button"
+                          className="grid h-8 w-8 place-items-center rounded-md bg-primary text-sm font-bold text-white transition hover:bg-primary-light"
+                          onClick={() => increaseQuantity(item.sku)}
+                        >
+                          +
+                        </button>
+                      </div>
+
+                      <button
+                        type="button"
+                        className="mt-3 text-sm font-medium text-red-600 transition hover:text-red-700 hover:underline"
+                        onClick={() => removeFromCart(item.sku)}
+                      >
+                        Eliminar
+                      </button>
+                    </div>
+
+                    <div className="flex h-24 w-24 shrink-0 items-center justify-center overflow-hidden rounded-lg bg-stone-200">
+                      {item.imagen ? (
+                        <img
+                          src={item.imagen}
+                          alt={item.nombre}
+                          className="h-full w-full object-cover"
+                        />
+                      ) : (
+                        <span className="text-3xl text-gray-400">🔩</span>
+                      )}
+                    </div>
                   </div>
-
-                  <div className="mt-3 flex items-center gap-3">
-                    <button
-                      type="button"
-                      className="grid h-8 w-8 place-items-center rounded-md bg-primary text-sm font-bold text-white transition hover:bg-primary-light"
-                      onClick={() => decreaseQuantity(item.sku)}
-                    >
-                      -
-                    </button>
-
-                    <span className="min-w-6 text-center text-sm font-semibold text-gray-900">
-                      {item.cantidad}
-                    </span>
-
-                    <button
-                      type="button"
-                      className="grid h-8 w-8 place-items-center rounded-md bg-primary text-sm font-bold text-white transition hover:bg-primary-light"
-                      onClick={() => increaseQuantity(item.sku)}
-                    >
-                      +
-                    </button>
-                  </div>
-
-                  <button
-                    type="button"
-                    className="mt-3 text-sm font-medium text-red-600 transition hover:text-red-700 hover:underline"
-                    onClick={() => removeFromCart(item.sku)}
-                  >
-                    Eliminar
-                  </button>
                 </div>
               ))}
             </div>
