@@ -3,6 +3,7 @@ import { useAuth } from "../../contexts/AuthContext";
 import {
   LayoutDashboard,
   FileText,
+  Package,
   LogOut,
   ChevronLeft,
   ChevronRight,
@@ -13,6 +14,7 @@ import clsx from "clsx";
 const links = [
   { to: "/admin", label: "Dashboard", icon: LayoutDashboard, exact: true },
   { to: "/admin/cotizaciones", label: "Cotizaciones", icon: FileText },
+  { to: "/admin/productos", label: "Productos", icon: Package },
 ];
 
 const AdminLayout = () => {

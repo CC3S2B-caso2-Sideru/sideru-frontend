@@ -10,6 +10,7 @@ import PrivateRoute from "./components/auth/PrivateRoute";
 import AdminRoute from "./components/auth/AdminRoute";
 import AdminLayout from "./components/admin/AdminLayout";
 import CotizacionesAdminPage from "./pages/admin/CotizacionesAdminPage";
+import ProductosAdminPage from "./pages/admin/ProductosAdminPage";
 
 const App = () => {
   return (
@@ -40,6 +41,7 @@ const App = () => {
       >
         <Route index element={<CotizacionesAdminPage />} />
         <Route path="cotizaciones" element={<CotizacionesAdminPage />} />
+        <Route path="productos" element={<ProductosAdminPage />} />
       </Route>
     </Routes>
   );
