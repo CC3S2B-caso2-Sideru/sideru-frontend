@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import clsx from "clsx";
 import { useAuth } from "../../contexts/AuthContext";
+import { required, composite, minLength, pattern } from "../../utils/validators";
 
 const RegisterPage = () => {
   const navigate = useNavigate();
@@ -29,22 +30,59 @@ const RegisterPage = () => {
     setter((prev) => ({ ...prev, [e.target.name]: e.target.value }));
   };
 
+  const validateStep1 = () => {
+    const fields = { ...form };
+    const rules = {
+      username: composite(required),
+      email: composite(required),
+      password: composite(required, minLength(6)),
+      confirmPassword: composite(required),
+    };
+    for (const [field, rule] of Object.entries(rules)) {
+      const err = rule(fields[field]);
+      if (err) return err;
+    }
+    if (form.password !== form.confirmPassword)
+      return "Las contraseñas no coinciden";
+    return null;
+  };
+
   const handleNext = (e) => {
     e.preventDefault();
-    if (!form.username || !form.email || !form.password || !form.confirmPassword) {
-      setError("Completa todos los campos");
-      return;
-    }
-    if (form.password !== form.confirmPassword) {
-      setError("Las contraseñas no coinciden");
+    const err = validateStep1();
+    if (err) {
+      setError(err);
       return;
     }
     setError("");
     setStep(2);
   };
 
+  const validatePersona = () => {
+    const rules = {
+      nombre: composite(required, minLength(2)),
+      apellido: composite(required, minLength(2)),
+    };
+    for (const [field, rule] of Object.entries(rules)) {
+      const err = rule(persona[field]);
+      if (err) return err;
+    }
+    if (persona.dni && !/^\d{8}$/.test(persona.dni))
+      return "El DNI debe tener 8 dígitos";
+    if (persona.ruc && !/^\d{11}$/.test(persona.ruc))
+      return "El RUC debe tener 11 dígitos";
+    if (persona.telefono && !/^\d{9}$/.test(persona.telefono))
+      return "El teléfono debe tener 9 dígitos";
+    return null;
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
+    const personaError = validatePersona();
+    if (personaError) {
+      setError(personaError);
+      return;
+    }
     setError("");
     setLoading(true);
     try {

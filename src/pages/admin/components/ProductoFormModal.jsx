@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { X } from "lucide-react";
 import { fetchCategorias } from "../../../services/productos.service";
+import { required, composite, positive, notNegative } from "../../../utils/validators";
 
 const inputClass =
   "w-full rounded-lg border-2 border-gray-300 px-3 py-2 text-sm shadow-sm transition focus:border-primary focus:ring-4 focus:ring-blue-900/15 focus:outline-none";
@@ -48,13 +49,22 @@ const ProductoFormModal = ({ producto, onSave, onClose }) => {
   };
 
   const validate = () => {
-    if (!form.sku.trim()) return "El SKU es obligatorio";
-    if (!form.nombre.trim()) return "El nombre es obligatorio";
-    if (!form.precio || Number(form.precio) <= 0) return "El precio debe ser mayor a 0";
-    if (form.stock === "" || Number(form.stock) < 0) return "El stock no puede ser negativo";
+    const rules = {
+      sku: composite(required),
+      nombre: composite(required),
+      categoriaId: composite(required),
+      precio: composite(required, positive),
+      stock: composite(required, notNegative),
+    };
+
+    for (const [field, rule] of Object.entries(rules)) {
+      const error = rule(form[field]);
+      if (error) return error;
+    }
+
     if (form.stockMinimo && Number(form.stockMinimo) > Number(form.stock))
       return "El umbral de auto-aprobación no puede ser mayor que el stock";
-    if (!form.categoriaId) return "Selecciona una categoría";
+
     return null;
   };
 
