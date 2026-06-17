@@ -4,12 +4,14 @@ import ProductosPage from "./pages/productos/ProductosPage";
 import LoginPage from "./pages/auth/LoginPage";
 import RegisterPage from "./pages/auth/RegisterPage";
 import SolicitudesPage from "./pages/solicitudes/SolicitudesPage";
+import PedidosPage from "./pages/pedidos/PedidosPage";
 import NotFoundPage from "./pages/NotFoundPage";
 import Layout from "./components/layout/Layout";
 import PrivateRoute from "./components/auth/PrivateRoute";
 import AdminRoute from "./components/auth/AdminRoute";
 import AdminLayout from "./components/admin/AdminLayout";
 import CotizacionesAdminPage from "./pages/admin/CotizacionesAdminPage";
+import PedidosAdminPage from "./pages/admin/PedidosAdminPage";
 
 const App = () => {
   return (
@@ -27,6 +29,14 @@ const App = () => {
             </PrivateRoute>
           }
         />
+        <Route
+          path="/pedidos"
+          element={
+            <PrivateRoute>
+              <PedidosPage />
+            </PrivateRoute>
+          }
+        />
         <Route path="*" element={<NotFoundPage />} />
       </Route>
 
@@ -40,6 +50,7 @@ const App = () => {
       >
         <Route index element={<CotizacionesAdminPage />} />
         <Route path="cotizaciones" element={<CotizacionesAdminPage />} />
+        <Route path="pedidos" element={<PedidosAdminPage />} />
       </Route>
     </Routes>
   );
