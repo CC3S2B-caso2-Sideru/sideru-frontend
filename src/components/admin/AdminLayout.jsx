@@ -4,6 +4,7 @@ import {
   LayoutDashboard,
   FileText,
   PackageCheck,
+  Package,
   LogOut,
   ChevronLeft,
   ChevronRight,
@@ -15,6 +16,7 @@ const links = [
   { to: "/admin", label: "Dashboard", icon: LayoutDashboard, exact: true },
   { to: "/admin/cotizaciones", label: "Cotizaciones", icon: FileText },
   { to: "/admin/pedidos", label: "Pedidos", icon: PackageCheck },
+  { to: "/admin/productos", label: "Productos", icon: Package },
 ];
 
 const AdminLayout = () => {
