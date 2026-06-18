@@ -1,10 +1,11 @@
 import { useState } from "react";
-import { ChevronDown, Check, X } from "lucide-react";
+import { ChevronDown, Check, X, PackageCheck } from "lucide-react";
 import clsx from "clsx";
 import EstadoBadge from "../../solicitudes/components/EstadoBadge";
 import SolicitudDetalle from "../../solicitudes/components/SolicitudDetalle";
 import { useToast } from "../../../contexts/ToastContext";
 import { aceptarCotizacion, rechazarCotizacion } from "../../../services/admin.service";
+import { crearPedidoDesdeCotizacion } from "../../../services/pedidos.service";
 
 const formatPrice = (value) =>
   Number(value).toLocaleString("es-PE", { minimumFractionDigits: 2 });
@@ -21,6 +22,7 @@ const AdminCotizacionCard = ({ solicitud, onUpdate }) => {
   const [expanded, setExpanded] = useState(false);
   const [acting, setActing] = useState(false);
   const [confirmAction, setConfirmAction] = useState(null);
+  const [pedidoGenerado, setPedidoGenerado] = useState(false);
 
   const handleAction = async (action) => {
     setActing(true);
@@ -34,6 +36,19 @@ const AdminCotizacionCard = ({ solicitud, onUpdate }) => {
     } finally {
       setActing(false);
       setConfirmAction(null);
+    }
+  };
+
+  const handleCrearPedido = async () => {
+    setActing(true);
+    try {
+      await crearPedidoDesdeCotizacion(solicitud.id);
+      setPedidoGenerado(true);
+      toast.success("Pedido generado correctamente.");
+    } catch (err) {
+      toast.error(err.response?.data?.message || "No se pudo generar el pedido.");
+    } finally {
+      setActing(false);
     }
   };
 
@@ -129,6 +144,27 @@ const AdminCotizacionCard = ({ solicitud, onUpdate }) => {
               </button>
             </div>
           )}
+        </div>
+      )}
+
+      {solicitud.estado === "aceptada" && (
+        <div className="border-t border-gray-100 bg-gray-50 px-4 py-3 sm:px-6">
+          <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
+            <p className="m-0 text-sm text-gray-600">
+              {pedidoGenerado
+                ? "El pedido ya fue generado desde esta cotizacion."
+                : "Esta cotizacion esta lista para convertirse en pedido."}
+            </p>
+            <button
+              type="button"
+              disabled={acting || pedidoGenerado}
+              className="inline-flex items-center justify-center gap-2 rounded-lg bg-primary px-4 py-2 text-sm font-medium text-white transition hover:bg-primary-light disabled:cursor-not-allowed disabled:opacity-70"
+              onClick={handleCrearPedido}
+            >
+              <PackageCheck size={16} />
+              {acting ? "Generando..." : pedidoGenerado ? "Pedido generado" : "Generar pedido"}
+            </button>
+          </div>
         </div>
       )}
     </div>

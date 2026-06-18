@@ -45,6 +45,15 @@ const Navbar = () => {
               </Link>
             )}
 
+            {token && user?.tipo !== "INTERNO" && (
+              <Link
+                className="shrink-0 whitespace-nowrap text-sm font-medium text-black no-underline transition hover:text-slate-950 sm:text-base"
+                to="/pedidos"
+              >
+                Mis Pedidos
+              </Link>
+            )}
+
             {token && (
               <span className="shrink-0 rounded-lg bg-slate-100 px-3 py-2 text-sm font-medium text-slate-950 sm:px-4">
                 {user?.username || user?.persona?.nombre || "Usuario"}
