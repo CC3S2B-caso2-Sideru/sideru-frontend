@@ -8,7 +8,7 @@ const CotizacionesAdminPage = () => {
   const [cotizaciones, setCotizaciones] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [filtro, setFiltro] = useState("enviada");
+  const [filtro, setFiltro] = useState("");
 
   const fetchData = async () => {
     setLoading(true);

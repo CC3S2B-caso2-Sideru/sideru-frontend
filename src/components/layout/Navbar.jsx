@@ -46,12 +46,20 @@ const Navbar = () => {
             )}
 
             {token && user?.tipo !== "INTERNO" && (
-              <Link
-                className="shrink-0 whitespace-nowrap text-sm font-medium text-black no-underline transition hover:text-slate-950 sm:text-base"
-                to="/pedidos"
-              >
-                Mis Pedidos
-              </Link>
+              <>
+                <Link
+                  className="shrink-0 whitespace-nowrap text-sm font-medium text-black no-underline transition hover:text-slate-950 sm:text-base"
+                  to="/solicitudes"
+                >
+                  Mis Cotizaciones
+                </Link>
+                <Link
+                  className="shrink-0 whitespace-nowrap text-sm font-medium text-black no-underline transition hover:text-slate-950 sm:text-base"
+                  to="/pedidos"
+                >
+                  Mis Pedidos
+                </Link>
+              </>
             )}
 
             {token && (
