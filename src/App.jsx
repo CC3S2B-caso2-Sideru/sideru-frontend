@@ -13,6 +13,7 @@ import AdminLayout from "./components/admin/AdminLayout";
 import CotizacionesAdminPage from "./pages/admin/CotizacionesAdminPage";
 import PedidosAdminPage from "./pages/admin/PedidosAdminPage";
 import ProductosAdminPage from "./pages/admin/ProductosAdminPage";
+import DashboardPage from "./pages/admin/DashboardPage";
 
 const App = () => {
   return (
@@ -49,7 +50,7 @@ const App = () => {
           </AdminRoute>
         }
       >
-        <Route index element={<CotizacionesAdminPage />} />
+        <Route index element={<DashboardPage />} />
         <Route path="cotizaciones" element={<CotizacionesAdminPage />} />
         <Route path="pedidos" element={<PedidosAdminPage />} />
         <Route path="productos" element={<ProductosAdminPage />} />
