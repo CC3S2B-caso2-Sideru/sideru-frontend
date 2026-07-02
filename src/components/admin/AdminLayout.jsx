@@ -44,7 +44,9 @@ const AdminLayout = () => {
           )}
         >
           {!collapsed && (
-            <span className="text-lg font-bold text-primary">Sideru</span>
+            <NavLink to="/">
+              <span className="text-lg font-bold text-primary">Sideru</span>
+            </NavLink>
           )}
           <button
             type="button"

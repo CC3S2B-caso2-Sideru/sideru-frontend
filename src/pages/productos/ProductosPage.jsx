@@ -22,7 +22,7 @@ const ProductsPage = () => {
     setError(null);
     try {
       const { data } = await fetchProductosService(search, categoria);
-      setProductos(data);
+      setProductos(data.content);
     } catch (err) {
       setError(err.message);
     } finally {
